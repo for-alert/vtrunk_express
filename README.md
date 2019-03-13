@@ -1,8 +1,3 @@
-# サイト表示
-ビルド済のサイトは以下からアクセスできます
-
-https://express-task-list.herokuapp.com/
-
 # 構築方法
 
 npm install
