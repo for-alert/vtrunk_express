@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 import * as express from 'express';
 var path = require('path');
