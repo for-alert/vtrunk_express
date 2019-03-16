@@ -23,6 +23,7 @@
     "morgan": "^1.9.1",
     "ts-loader": "^4.5.0",
     "typescript": "^2.9.2",
+    "uuid": "^3.3.2",
     "webpack": "^4.29.6"
   },
   "devDependencies": {

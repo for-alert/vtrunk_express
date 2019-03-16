@@ -1,13 +1,5 @@
 import * as Axios from "axios";
-
-function RecordFormat(data: any) {
-    Object.keys(data).forEach(k => data[k] = data[k].value);
-    data["作成者"] = undefined;
-    data["更新者"] = undefined;
-    data["更新日時"] = undefined;
-    data["作成日時"] = undefined;
-    return data;
-}
+import { RecordFormat } from "./Format";
 
 const axios = Axios.default.create({
     baseURL: process.env.KINTONE_URL,
@@ -24,5 +16,19 @@ export default class PublicUser {
         const users = res.data.records;
         users.map((user: any) => RecordFormat(user));
         return users;
+    }
+
+    static async CreateUser(userName: string, sex: string, birthday: string) {
+        const request = {
+            userName: { value: userName },
+            sex: { value: sex },
+            birthday: { value: birthday },
+            level: { value: "1" },
+            exp: { value: "0" }
+        };
+        const x = await axios.post("/k/v1/record.json",
+            { app: 6, record: request }
+        );
+        return x.data.userId;
     }
 } 
