@@ -98,11 +98,16 @@ indexRouter.post('/login_user', async (req: Request, res: Response, next: any) =
 
 indexRouter.get('/find_store_name', async (req: Request, res: Response, next: any) => {
   const storeName = req.query.name;
-  if (storeName) {
-    const data = await GuruNavi.FindStoreName(storeName).catch(e => { console.log(e); return Promise.resolve([]); });
+  const latitude = req.query.latitude;
+  const longitude = req.query.longitude;
+  if (storeName && latitude && longitude) {
+    let data = await GuruNavi.FindStoreName(storeName, latitude, longitude).catch(e => { console.log(e); return Promise.resolve([]); });
+    if (data.length == 0) {
+      data = await GuruNavi.FindStoreNameFreeWhere(storeName).catch(e => { console.log(e); return Promise.resolve([]); });
+    }
     res.json(data);
   }
-  else res.status(422).json("nameが入力されていません");
+  else res.status(422).json("要素が入力されていません");
 });
 
 indexRouter.post('/add_store', async (req: Request, res: Response, next: any) => {
